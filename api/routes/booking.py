@@ -44,9 +44,4 @@ def delete_booking(booking_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Booking not found")
     return {"message": "Booking deleted successfully"}
 
-@router.get("/bookings/user/{user_id}", response_model=List[BookingResponse])
-def get_bookings_by_user(user_id: int, db: Session = Depends(get_db)):
-    bookings = booking_crud.get_bookings_by_user_id(db=db, user_id=user_id)
-    if not bookings:
-        raise HTTPException(status_code=404, detail="No bookings found for this user")
-    return bookings
+
