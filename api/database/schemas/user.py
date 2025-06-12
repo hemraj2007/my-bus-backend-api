@@ -42,9 +42,9 @@ class PasswordUpdate(BaseModel):
 
 
 class UserProfileUpdate(BaseModel):
-    name: Optional[str]
-    email: Optional[EmailStr]
-    mob_number: Optional[str]
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    mob_number: Optional[str] = None
 
     class Config:
         from_attributes = True

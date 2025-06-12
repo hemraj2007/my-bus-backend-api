@@ -1,5 +1,5 @@
 # api/database/models.py
-from sqlalchemy import Column, Integer, Float, String, DateTime
+from sqlalchemy import Column, Integer, Float, String, DateTime, Date, func
 from api.database.connection import Base
 from datetime import datetime
 
@@ -13,5 +13,6 @@ class Booking(Base):
     seats = Column(Integer, nullable=False)
     price_per_seat = Column(Float, nullable=False)
     total_price = Column(Float, nullable=False)
+    travel_date = Column(Date, default=func.current_date())
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

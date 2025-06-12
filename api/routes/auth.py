@@ -33,14 +33,23 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     
     - Validates user credentials.
     - If correct, generates an access token.
+    - Returns role as well.
     """
     db_user = get_user_by_email(db, user.email)
+    
     if not db_user or not verify_password(user.password, db_user.password):
         raise HTTPException(status_code=400, detail="Invalid credentials")
-    
-    # Generate an access token for authenticated user
-    access_token = create_access_token(data={"sub": db_user.email})
+
+    # 🛡️ Include role in JWT token payload
+    token_data = {
+        "sub": db_user.email,
+        "role": db_user.role  # 👈 add role here
+    }
+
+    access_token = create_access_token(data=token_data)
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
+        "role": db_user.role  # 👈 directly return role for frontend access
     }

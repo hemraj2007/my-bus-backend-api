@@ -89,17 +89,16 @@ def update_user_profile(db: Session, user_id: int, updated_data: UserProfileUpda
     if not user:
         return None
 
-    # Update the user profile fields if provided
-    if updated_data.name:
+    # Only update fields if they are explicitly sent
+    if updated_data.name is not None:
         user.name = updated_data.name
 
-    if updated_data.email:
+    if updated_data.email is not None:
         user.email = updated_data.email
 
-    if updated_data.mob_number:
+    if updated_data.mob_number is not None:
         user.mob_number = updated_data.mob_number
 
-    # Update the timestamp when the profile is updated
     user.updated_at = datetime.utcnow()
 
     db.commit()

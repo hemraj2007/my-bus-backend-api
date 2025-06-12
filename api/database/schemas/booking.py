@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from datetime import date
 
 class BookingCreate(BaseModel):
     user_id: int
@@ -8,6 +9,7 @@ class BookingCreate(BaseModel):
     to_location: str
     seats: int
     price_per_seat: float
+    travel_date: Optional[date] = None
     
 
     class Config:
@@ -30,6 +32,8 @@ class BookingResponse(BaseModel):
     seats: int
     price_per_seat: float
     total_price: float
+    travel_date: Optional[date] = None
+
     created_at: datetime
     updated_at: datetime
 

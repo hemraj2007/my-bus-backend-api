@@ -33,24 +33,24 @@ def update_password(
     return {"message": "Password updated successfully."}
 
 # Update Profile
-@router.put("/update_profile", response_model=UserResponse)
-def update_profile(
-    updated_data: UserProfileUpdate,  # Accepting the data from the user
-    current_user: UserResponse = Depends(get_current_user),  # Getting the currently authenticated user, using UserResponse here
-    db: Session = Depends(get_db)  # Dependency injection for DB session
+# Update Profile by Admin (based on user_id)
+@router.put("/update_profile/{user_id}", response_model=UserResponse)
+def update_user_profile_by_id(
+    user_id: int,
+    updated_data: UserProfileUpdate,
+    db: Session = Depends(get_db)
 ):
     """
-    Endpoint for updating the profile of the currently authenticated user.
+    Admin can update any user's profile using user_id
     """
-    # Call the CRUD function to update the user's profile in the database
-    user = user_crud.update_user_profile(db, current_user.id, updated_data)
+    user = user_crud.update_user_profile(db, user_id, updated_data)
 
-    # If no user is found, raise HTTP 404 error
     if not user:
         raise HTTPException(status_code=404, detail="User not found.")
-    
-    # Return the updated user profile
+
     return UserResponse.from_orm(user)
+
+
 
 
 @router.get("/users", response_model=List[UserResponse])
