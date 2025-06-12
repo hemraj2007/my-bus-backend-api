@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import auth, users, travels, booking
+from api.routes import auth, users, travels, booking , contact
 from api.database.connection import engine
 from api.database.base import Base
 
@@ -28,6 +28,9 @@ app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(travels.router, prefix="/travels", tags=["travels"])
 
 app.include_router(booking.router, prefix="/booking", tags=["booking"])
+
+app.include_router(contact.router, prefix="/contact", tags=["contact"])
+
 
 
 
