@@ -13,6 +13,6 @@ class Booking(Base):
     seats = Column(Integer, nullable=False)
     price_per_seat = Column(Float, nullable=False)
     total_price = Column(Float, nullable=False)
-    travel_date = Column(Date, default=func.current_date())
+    travel_date = Column(Date, default=lambda: datetime.utcnow().date())
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
